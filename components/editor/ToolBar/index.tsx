@@ -5,7 +5,7 @@ import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import { getFocusedEditor } from '../EditorUtils';
 import Button from './Button';
 import InsertLink from '../Link/InsertLink';
-import linkOption from '../Link/LinkForm';
+import { linkOption } from '../Link/LinkForm';
 
 const BoldIcon = () => {
   return (

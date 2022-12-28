@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import Button from '../ToolBar/Button';
 import LinkForm from './LinkForm';
-import linkOption from './LinkForm';
+import { linkOption } from './LinkForm';
 
 const LinkIcon = () => {
   return (
@@ -24,20 +24,30 @@ interface Props {
 const InsertLink: FC<Props> = ({ onSubmit }: Props): JSX.Element => {
   const [visible, setVisible] = useState(false);
 
+  const hideForm = () => setVisible(false);
+  const showForm = () => setVisible(true);
+
+  const handleSubmit = (link: linkOption) => {
+    if (!link.url.trim()) return hideForm();
+
+    onSubmit(link);
+    hideForm();
+  };
+
   return (
     <div
       onKeyDown={({ key }) => {
-        if (key === 'Escape') setVisible(false);
+        if (key === 'Escape') hideForm();
       }}
       className="relative focus:ring-0 active:bg-cyan-700 focus:bg-cyan-700"
     >
-      <Button onClick={() => setVisible(!visible)}>
+      <Button onClick={visible ? hideForm : showForm}>
         <LinkIcon />
       </Button>
       <div className="absolute right-0 mt-4 ">
         <div className="flex flex-col">
           <div className="bg-white rounded-md shadow-sm top-full w-80 shadow-cyan-500/10">
-            <LinkForm visible={visible} onSubmit={onSubmit} />
+            <LinkForm visible={visible} onSubmit={handleSubmit} />
           </div>
         </div>
       </div>
